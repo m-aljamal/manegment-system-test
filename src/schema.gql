@@ -1,0 +1,12 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Level {
+  id: Float!
+  name: String!
+}
+
+type Query {
+  levels: [Level!]!
+}
