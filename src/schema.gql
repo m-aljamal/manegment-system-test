@@ -2,11 +2,41 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Level Model"""
 type Level {
-  id: Float!
+  id: String!
+  name: String!
+}
+
+"""Division Model"""
+type Division {
+  id: String!
   name: String!
 }
 
 type Query {
   levels: [Level!]!
+  FindOne(id: String!): Level!
+  divisions: [Division!]!
+}
+
+type Mutation {
+  createLevel(createLevelInput: CreateLevelInput!): Level!
+  updateLevel(id: String!, updateLevelInput: UpdateLevelInput!): Level!
+  removeLevel(id: String!): Level!
+  createDivision(createDivisionInput: CreateDivisionInput!): Division!
+}
+
+"""create level input"""
+input CreateLevelInput {
+  name: String!
+}
+
+input UpdateLevelInput {
+  name: String
+}
+
+"""create division input"""
+input CreateDivisionInput {
+  name: String!
 }

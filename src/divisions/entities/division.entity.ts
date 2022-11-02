@@ -2,11 +2,11 @@ import { ObjectType } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-@ObjectType({ description: 'Level Model' })
-export class Level {
+@ObjectType({ description: 'Division Model' })
+export class Division {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-  // @Field(() => String) is required when CLI Plugin is disabled
+
   @Column()
   name: string;
 }
