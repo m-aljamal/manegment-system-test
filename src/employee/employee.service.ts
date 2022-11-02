@@ -1,3 +1,4 @@
+import { CreateEmployeeInput } from './dto/create-employee.input';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,5 +13,10 @@ export class EmployeeService {
 
   async findAll() {
     return this.employeeRepository.find();
+  }
+
+  async create(createEmployeeInput: CreateEmployeeInput) {
+    const employee = this.employeeRepository.create(createEmployeeInput);
+    return this.employeeRepository.save(employee);
   }
 }

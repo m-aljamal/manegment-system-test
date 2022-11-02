@@ -2,28 +2,39 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Student Model"""
+type Student implements Human {
+  name: String!
+  createdAt: Date!
+  id: String!
+  archives: [Archive!]!
+}
+
+interface Human {
+  name: String!
+  createdAt: Date!
+}
+
+type Archive {
+  id: String!
+  name: String!
+  createdAt: Date!
+  levels: [Level!]!
+  students: [Student!]!
+}
+
 """Level Model"""
 type Level {
   id: String!
   name: String!
+  archive: Archive!
+  archiveId: String!
 }
 
 """Division Model"""
 type Division {
   id: String!
   name: String!
-}
-
-"""Student Model"""
-type Student implements Human {
-  name: String!
-  createdAt: Date!
-  id: String!
-}
-
-interface Human {
-  name: String!
-  createdAt: Date!
 }
 
 """employee Model"""
@@ -50,15 +61,18 @@ type Mutation {
   removeLevel(id: String!): Level!
   createDivision(createDivisionInput: CreateDivisionInput!): Division!
   createStudent(createStudentInput: CreateStudentInput!): Student!
+  createEmployee(createEmployeeInput: CreateEmployeeInput!): Employee!
 }
 
 """create level input"""
 input CreateLevelInput {
   name: String!
+  archiveId: String!
 }
 
 input UpdateLevelInput {
   name: String
+  archiveId: String
 }
 
 """create division input"""
@@ -68,5 +82,10 @@ input CreateDivisionInput {
 
 """create student input"""
 input CreateStudentInput {
+  name: String!
+}
+
+"""create employee input"""
+input CreateEmployeeInput {
   name: String!
 }

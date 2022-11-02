@@ -1,4 +1,6 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Human } from 'src/common/interfaces/human.interface';
+import { CreateEmployeeInput } from './dto/create-employee.input';
 import { EmployeeService } from './employee.service';
 import { Employee } from './entity/employee.entity';
 
@@ -9,5 +11,12 @@ export class EmployeeResolver {
   @Query(() => [Employee], { name: 'employees' })
   async findAll() {
     return this.employeeService.findAll();
+  }
+
+  @Mutation(() => Employee, { name: 'createEmployee' })
+  async create(
+    @Args('createEmployeeInput') createEmployeeInput: CreateEmployeeInput,
+  ) {
+    return this.employeeService.create(createEmployeeInput);
   }
 }

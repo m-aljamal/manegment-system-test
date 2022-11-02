@@ -6,4 +6,6 @@ export class CreateLevelInput {
   // @Field(() => String) is required when CLI Plugin is disabled
   @MinLength(3)
   name: string;
+
+  archiveId: string;
 }
