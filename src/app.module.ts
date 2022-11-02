@@ -5,6 +5,10 @@ import { join } from 'path';
 import { LevelsModule } from './levels/levels.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DivisionsModule } from './divisions/divisions.module';
+import { StudentsModule } from './students/students.module';
+import { DateScalar } from './common/scalar/date.scalar';
+import { EmployeeModule } from './employee/employee.module';
+import { Employee } from './employee/entity/employee.entity';
 
 @Module({
   imports: [
@@ -22,11 +26,14 @@ import { DivisionsModule } from './divisions/divisions.module';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       buildSchemaOptions: {
-        numberScalarMode: 'integer',
+        orphanedTypes: [Employee],
       },
     }),
     LevelsModule,
     DivisionsModule,
+    StudentsModule,
+    EmployeeModule,
   ],
+  providers: [DateScalar],
 })
 export class AppModule {}

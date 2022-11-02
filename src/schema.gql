@@ -14,10 +14,34 @@ type Division {
   name: String!
 }
 
+"""Student Model"""
+type Student implements Human {
+  name: String!
+  createdAt: Date!
+  id: String!
+}
+
+interface Human {
+  name: String!
+  createdAt: Date!
+}
+
+"""employee Model"""
+type Employee implements Human {
+  name: String!
+  createdAt: Date!
+  id: String!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
 type Query {
   levels: [Level!]!
   FindOne(id: String!): Level!
   divisions: [Division!]!
+  students: [Student!]!
+  employees: [Employee!]!
 }
 
 type Mutation {
@@ -25,6 +49,7 @@ type Mutation {
   updateLevel(id: String!, updateLevelInput: UpdateLevelInput!): Level!
   removeLevel(id: String!): Level!
   createDivision(createDivisionInput: CreateDivisionInput!): Division!
+  createStudent(createStudentInput: CreateStudentInput!): Student!
 }
 
 """create level input"""
@@ -38,5 +63,10 @@ input UpdateLevelInput {
 
 """create division input"""
 input CreateDivisionInput {
+  name: String!
+}
+
+"""create student input"""
+input CreateStudentInput {
   name: String!
 }
