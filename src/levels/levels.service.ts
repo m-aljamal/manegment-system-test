@@ -51,4 +51,29 @@ export class LevelsService {
     const level = await this.findOne(id);
     return this.levelRepository.remove(level);
   }
+
+  async createAllLevels(archiveId: string) {
+    const levels = [
+      {
+        name: 'Level 1',
+        levelNumber: 1,
+      },
+      {
+        name: 'Level 2',
+        levelNumber: 2,
+      },
+      {
+        name: 'Level 3',
+        levelNumber: 3,
+      },
+    ];
+    const levelsToSave = levels.map((level) => {
+      return this.levelRepository.create({
+        ...level,
+        archiveId,
+      });
+    });
+    const levelssaved = await this.levelRepository.save(levelsToSave);
+    return levelssaved;
+  }
 }

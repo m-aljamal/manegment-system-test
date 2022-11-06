@@ -5,4 +5,6 @@ export class CreateStudentInput {
   name: string;
 
   archives: string[];
+
+  levels: string[];
 }

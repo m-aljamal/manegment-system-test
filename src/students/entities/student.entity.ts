@@ -1,3 +1,4 @@
+import { Level } from 'src/levels/entities/level.entity';
 import { Archive } from './../../archive/entity/archive.entity';
 import { ObjectType } from '@nestjs/graphql';
 import { Human } from 'src/common/interfaces/human.interface';
@@ -26,5 +27,7 @@ export class Student implements Human {
   @ManyToMany(() => Archive, (archive) => archive.students)
   archives: Archive[];
 
-  
+  @JoinTable()
+  @ManyToMany(() => Level, (level) => level.students)
+  levels: Level[];
 }

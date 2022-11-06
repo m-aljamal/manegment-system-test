@@ -1,6 +1,13 @@
 import { Archive } from './../../archive/entity/archive.entity';
 import { ObjectType } from '@nestjs/graphql';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Student } from 'src/students/entities/student.entity';
 
 @Entity()
 @ObjectType({ description: 'Level Model' })
@@ -16,4 +23,10 @@ export class Level {
 
   @Column()
   archiveId: string;
+
+  @Column()
+  levelNumber: number;
+
+  @ManyToMany(() => Student, (student) => student.levels)
+  students: Student[];
 }

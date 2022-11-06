@@ -7,5 +7,7 @@ export class CreateLevelInput {
   @MinLength(3)
   name: string;
 
+  levelNumber: number;
+
   archiveId: string;
 }

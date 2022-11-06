@@ -7,5 +7,6 @@ import { Level } from './entities/level.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Level])],
   providers: [LevelsResolver, LevelsService],
+  exports: [LevelsService],
 })
 export class LevelsModule {}

@@ -30,6 +30,7 @@ import { ArchiveModule } from './archive/archive.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       buildSchemaOptions: {
         orphanedTypes: [Employee],
+        numberScalarMode: 'integer',
       },
     }),
     LevelsModule,

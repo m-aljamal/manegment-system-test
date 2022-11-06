@@ -8,6 +8,7 @@ type Student implements Human {
   createdAt: Date!
   id: String!
   archives: [Archive!]!
+  levels: [Level!]!
 }
 
 interface Human {
@@ -29,6 +30,8 @@ type Level {
   name: String!
   archive: Archive!
   archiveId: String!
+  levelNumber: Int!
+  students: [Student!]!
 }
 
 """Division Model"""
@@ -61,17 +64,21 @@ type Mutation {
   removeLevel(id: String!): Level!
   createDivision(createDivisionInput: CreateDivisionInput!): Division!
   createStudent(createStudentInput: CreateStudentInput!): Student!
+  createArchive(createArchiveInput: CreateArchiveInput!): Archive!
+  openArchive(openArchiveInput: CreateArchiveInput!, currentArchiveId: String!): Archive!
   createEmployee(createEmployeeInput: CreateEmployeeInput!): Employee!
 }
 
 """create level input"""
 input CreateLevelInput {
   name: String!
+  levelNumber: Int!
   archiveId: String!
 }
 
 input UpdateLevelInput {
   name: String
+  levelNumber: Int
   archiveId: String
 }
 
@@ -82,6 +89,12 @@ input CreateDivisionInput {
 
 """create student input"""
 input CreateStudentInput {
+  name: String!
+  archives: [String!]!
+  levels: [String!]!
+}
+
+input CreateArchiveInput {
   name: String!
 }
 
