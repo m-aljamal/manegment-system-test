@@ -17,8 +17,13 @@ export class LevelsService {
     return this.levelRepository.save(level);
   }
 
-  findAll() {
-    return this.levelRepository.find();
+  findAll(archiveId?: string) {
+    return this.levelRepository.find({
+      where: {
+        archiveId,
+      },
+      relations: ['archive'],
+    });
   }
 
   async findOne(id: string) {
@@ -75,5 +80,17 @@ export class LevelsService {
     });
     const levelssaved = await this.levelRepository.save(levelsToSave);
     return levelssaved;
+  }
+
+  async findByName(name: string) {
+    const level = await this.levelRepository.findOne({
+      where: {
+        name,
+      },
+    });
+    if (!level) {
+      throw new UserInputError('Level not found');
+    }
+    return level;
   }
 }

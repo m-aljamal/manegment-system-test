@@ -8,8 +8,8 @@ import { LevelsService } from './levels.service';
 export class LevelsResolver {
   constructor(private readonly levelsService: LevelsService) {}
   @Query(() => [Level], { name: 'levels' })
-  async findAll() {
-    return this.levelsService.findAll();
+  async findAll(@Args('archiveId') archiveId?: string) {
+    return this.levelsService.findAll(archiveId);
   }
 
   @Query(() => Level)

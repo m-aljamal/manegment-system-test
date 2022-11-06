@@ -8,8 +8,8 @@ export class StudentsResolver {
   constructor(private readonly studentsService: StudentsService) {}
 
   @Query(() => [Student], { name: 'students' })
-  async findAll() {
-    return this.studentsService.findAll();
+  async findAll(@Args('archiveId', { nullable: true }) archiveId?: string) {
+    return this.studentsService.findAll(archiveId);
   }
 
   @Mutation(() => Student, { name: 'createStudent' })

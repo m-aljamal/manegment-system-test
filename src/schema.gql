@@ -51,10 +51,10 @@ type Employee implements Human {
 scalar Date
 
 type Query {
-  levels: [Level!]!
+  levels(archiveId: String!): [Level!]!
   FindOne(id: String!): Level!
   divisions: [Division!]!
-  students: [Student!]!
+  students(archiveId: String): [Student!]!
   employees: [Employee!]!
 }
 

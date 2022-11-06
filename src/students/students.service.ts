@@ -18,8 +18,21 @@ export class StudentsService {
     private readonly levelService: LevelsService,
   ) {}
 
-  async findAll() {
-    return this.studentRepository.find({ relations: ['archives', 'levels'] });
+  async findAll(archiveId?: string): Promise<Student[]> {
+    // return this.studentRepository.find({
+    //   where: {
+    //     archives: archiveId ? { id: archiveId } : undefined,
+    //   },
+    //   relations: ['archives', 'levels'],
+    // });
+    const query = this.studentRepository.createQueryBuilder('student');
+    query.leftJoinAndSelect('student.archives', 'archives');
+    query.leftJoinAndSelect('student.levels', 'levels');
+    if (archiveId) {
+      query.where('archives.id = :archiveId', { archiveId });
+      query.andWhere('levels.archiveId = :archiveId', { archiveId });
+    }
+    return query.getMany();
   }
 
   async create(createStudentInput: CreateStudentInput) {
@@ -55,6 +68,11 @@ export class StudentsService {
     const students = await this.findAll();
     students.forEach(async (student) => {
       student.archives.push(archive);
+      if (student.id === '95b6c7d2-56c7-4caf-ab34-7d8f9952cbc2') {
+        student.levels.push(await this.levelService.findByName('Level 2'));
+      } else {
+        student.levels.push(await this.levelService.findByName('Level 1'));
+      }
       await this.studentRepository.save(student);
     });
   }

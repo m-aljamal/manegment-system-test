@@ -33,5 +33,6 @@ export class ArchiveService {
     const newArchive = await this.archiveRepository.save(archive);
     await this.levelService.createAllLevels(newArchive.id);
     await this.studentService.upgradeStudentsArchive(newArchive);
+    return newArchive;
   }
 }
