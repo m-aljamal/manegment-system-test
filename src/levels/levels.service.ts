@@ -5,12 +5,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UpdateLevelInput } from './dto/update-level.input';
 import { UserInputError } from 'apollo-server-express';
+import { DivisionsService } from 'src/divisions/divisions.service';
 
 @Injectable()
 export class LevelsService {
   constructor(
     @InjectRepository(Level)
     private readonly levelRepository: Repository<Level>,
+    private readonly divisionsService: DivisionsService,
   ) {}
   create(createLevelInput: CreateLevelInput) {
     const level = this.levelRepository.create(createLevelInput);
@@ -57,7 +59,7 @@ export class LevelsService {
     return this.levelRepository.remove(level);
   }
 
-  async createAllLevels(archiveId: string) {
+  async createAllLevels(archiveId: string, currentArchiveId: string) {
     const levels = [
       {
         name: 'Level 1',
@@ -72,6 +74,7 @@ export class LevelsService {
         levelNumber: 3,
       },
     ];
+
     const levelsToSave = levels.map((level) => {
       return this.levelRepository.create({
         ...level,
@@ -79,6 +82,7 @@ export class LevelsService {
       });
     });
     const levelssaved = await this.levelRepository.save(levelsToSave);
+    await this.divisionsService.createAllDivisions(archiveId, currentArchiveId);
     return levelssaved;
   }
 

@@ -1,3 +1,4 @@
+import { DivisionsModule } from './../divisions/divisions.module';
 import { ArchiveModule } from './../archive/archive.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module, forwardRef } from '@nestjs/common';
@@ -11,6 +12,7 @@ import { LevelsModule } from 'src/levels/levels.module';
     TypeOrmModule.forFeature([Student]),
     forwardRef(() => ArchiveModule),
     LevelsModule,
+    DivisionsModule,
   ],
   providers: [StudentsResolver, StudentsService],
   exports: [StudentsService],

@@ -7,4 +7,6 @@ export class CreateStudentInput {
   archives: string[];
 
   levels: string[];
+
+  divisions: string[];
 }

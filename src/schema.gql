@@ -9,19 +9,12 @@ type Student implements Human {
   id: String!
   archives: [Archive!]!
   levels: [Level!]!
+  divisions: [Division!]!
 }
 
 interface Human {
   name: String!
   createdAt: Date!
-}
-
-type Archive {
-  id: String!
-  name: String!
-  createdAt: Date!
-  levels: [Level!]!
-  students: [Student!]!
 }
 
 """Level Model"""
@@ -32,12 +25,7 @@ type Level {
   archiveId: String!
   levelNumber: Int!
   students: [Student!]!
-}
-
-"""Division Model"""
-type Division {
-  id: String!
-  name: String!
+  divisions: [Division!]!
 }
 
 """employee Model"""
@@ -45,6 +33,28 @@ type Employee implements Human {
   name: String!
   createdAt: Date!
   id: String!
+  archives: [Archive!]!
+}
+
+type Archive {
+  id: String!
+  name: String!
+  createdAt: Date!
+  levels: [Level!]!
+  students: [Student!]!
+  employees: [Employee!]!
+  divisions: [Division!]!
+}
+
+"""Division Model"""
+type Division {
+  id: String!
+  name: String!
+  archive: Archive!
+  archiveId: String!
+  level: Level!
+  levelId: String!
+  students: [Student!]!
 }
 
 """Date custom scalar type"""
@@ -85,6 +95,8 @@ input UpdateLevelInput {
 """create division input"""
 input CreateDivisionInput {
   name: String!
+  archiveId: String!
+  levelId: String!
 }
 
 """create student input"""
@@ -92,6 +104,7 @@ input CreateStudentInput {
   name: String!
   archives: [String!]!
   levels: [String!]!
+  divisions: [String!]!
 }
 
 input CreateArchiveInput {

@@ -1,3 +1,4 @@
+import { Archive } from 'src/archive/entity/archive.entity';
 import { ObjectType } from '@nestjs/graphql';
 import { Human } from 'src/common/interfaces/human.interface';
 import {
@@ -5,6 +6,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 @Entity()
@@ -18,4 +21,8 @@ export class Employee implements Human {
 
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @JoinTable()
+  @ManyToMany(() => Archive, (archive) => archive.employees)
+  archives: Archive[];
 }

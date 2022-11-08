@@ -5,9 +5,11 @@ import {
   Entity,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Student } from 'src/students/entities/student.entity';
+import { Division } from 'src/divisions/entities/division.entity';
 
 @Entity()
 @ObjectType({ description: 'Level Model' })
@@ -29,4 +31,7 @@ export class Level {
 
   @ManyToMany(() => Student, (student) => student.levels)
   students: Student[];
+
+  @OneToMany(() => Division, (division) => division.level)
+  divisions: Division[];
 }

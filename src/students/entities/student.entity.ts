@@ -10,6 +10,7 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Division } from 'src/divisions/entities/division.entity';
 
 @Entity()
 @ObjectType({ description: 'Student Model', implements: () => [Human] })
@@ -30,4 +31,8 @@ export class Student implements Human {
   @JoinTable()
   @ManyToMany(() => Level, (level) => level.students)
   levels: Level[];
+
+  @JoinTable()
+  @ManyToMany(() => Division, (division) => division.students)
+  divisions: Division[];
 }

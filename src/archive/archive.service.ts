@@ -27,11 +27,11 @@ export class ArchiveService {
 
   async openArchive(
     createArchiveInput: CreateArchiveInput,
-    currentArchive: string,
+    currentArchiveId: string,
   ) {
     const archive = this.archiveRepository.create(createArchiveInput);
     const newArchive = await this.archiveRepository.save(archive);
-    await this.levelService.createAllLevels(newArchive.id);
+    await this.levelService.createAllLevels(newArchive.id, currentArchiveId);
     await this.studentService.upgradeStudentsArchive(newArchive);
     return newArchive;
   }
