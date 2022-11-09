@@ -64,6 +64,7 @@ type Query {
   levels(archiveId: String!): [Level!]!
   FindOne(id: String!): Level!
   divisions: [Division!]!
+  divisionsByArchiveIdAndLevelId(archiveId: String!, levelNumber: Int!): [Division!]!
   students(archiveId: String): [Student!]!
   employees: [Employee!]!
 }

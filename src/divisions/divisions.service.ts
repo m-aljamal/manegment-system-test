@@ -16,6 +16,14 @@ export class DivisionsService {
     return this.divisionRepository.find();
   }
 
+  async findByName(name: string): Promise<Division> {
+    return this.divisionRepository.findOne({
+      where: {
+        name,
+      },
+    });
+  }
+
   async create(createDivisionInput: CreateDivisionInput): Promise<Division> {
     const division = this.divisionRepository.create(createDivisionInput);
     return this.divisionRepository.save(division);
@@ -29,24 +37,41 @@ export class DivisionsService {
     });
   }
 
-  async findByArchiveId(archiveId: string): Promise<Division[]> {
+  async findByArchiveIdAndLevelId(
+    archiveId: string,
+    levelNumber: number,
+  ): Promise<Division[]> {
     return this.divisionRepository.find({
       where: {
         archiveId,
+        level: {
+          levelNumber,
+        },
       },
+      relations: ['level'],
     });
   }
 
-  async createAllDivisions(archiveId: string, currentArchiveId: string) {
-    const divisions = await this.findByArchiveId(currentArchiveId);
-    const levels = 
-    const newDivisions = divisions.map((division) => {
+  async createAllDivisions(
+    archiveId: string,
+    currentArchiveId: string,
+    levelId: string,
+  ) {
+    const divisions = await this.findByArchiveIdAndLevelId(currentArchiveId, 1);
+    console.log('divisions', divisions);
+
+    const newDivisions = divisions.map(async (division) => {
       const newDivision = this.divisionRepository.create({
         ...division,
+        levelId,
         archiveId,
       });
-      return this.divisionRepository.save(newDivision);
+
+      console.log('newDivision', newDivision);
+      const saved = await this.divisionRepository.save(newDivision);
+      console.log('saved', saved);
     });
+
     return Promise.all(newDivisions);
   }
 }

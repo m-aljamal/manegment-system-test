@@ -79,10 +79,12 @@ export class StudentsService {
     const students = await this.findAll();
     students.forEach(async (student) => {
       student.archives.push(archive);
-      if (student.id === '616170eb-c7a7-45a5-9f02-54aa2ab2a373') {
+      if (student.name === 'st1') {
         student.levels.push(await this.levelService.findByName('Level 2'));
+        student.divisions.push(await this.divisionService.findByName('a2'));
       } else {
         student.levels.push(await this.levelService.findByName('Level 1'));
+        student.divisions.push(await this.divisionService.findByName('a2'));
       }
       await this.studentRepository.save(student);
     });

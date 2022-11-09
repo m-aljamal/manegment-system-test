@@ -81,9 +81,17 @@ export class LevelsService {
         archiveId,
       });
     });
-    const levelssaved = await this.levelRepository.save(levelsToSave);
-    await this.divisionsService.createAllDivisions(archiveId, currentArchiveId);
-    return levelssaved;
+
+    const newLevels = await this.levelRepository.save(levelsToSave);
+    newLevels.map(async (level) => {
+      await this.divisionsService.createAllDivisions(
+        archiveId,
+        currentArchiveId,
+        level.id,
+      );
+    });
+
+    return newLevels;
   }
 
   async findByName(name: string) {

@@ -12,6 +12,14 @@ export class DivisionsResolver {
     return this.divisionsService.findAll();
   }
 
+  @Query(() => [Division], { name: 'divisionsByArchiveIdAndLevelId' })
+  async findByArchiveIdAndLevelId(
+    @Args('archiveId') archiveId: string,
+    @Args('levelNumber') levelNumber: number,
+  ) {
+    return this.divisionsService.findByArchiveIdAndLevelId(archiveId, levelNumber);
+  }
+
   @Mutation(() => Division, { name: 'createDivision' })
   async create(
     @Args('createDivisionInput') createDivisionInput: CreateDivisionInput,
